@@ -1,2 +1,4 @@
 executable('tickets app', 
-                'main.cpp') 
+                'main.cpp',
+                link_with: [utils_lib],
+                include_directories: [utils_includes]) 
