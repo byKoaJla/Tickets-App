@@ -10,5 +10,8 @@ project('tickets app','cpp',
                 ]
 )
 
+
 subdir('module')
+styles_includes = include_directories('module/styles')
+subdir('navigation')
 subdir('cmd')
