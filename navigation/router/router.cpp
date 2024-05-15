@@ -4,6 +4,7 @@
 
 #include "router.hpp"
 
+#include <conio.h>
 #include <iostream>
 #include <ranges>
 #include <styles.hpp>
@@ -41,6 +42,11 @@ namespace Navigation {
                 system("cls");
                 exitToMainMenu = findRoute->nav();
                 }
+            else {
+                cout << "Нет такого действия, попробуйте еще раз (Нажмите Enter...)" << endl;
+                _getch();
+                system("cls");
+            }
             if (exitToMainMenu) {
                 system("cls");
                 exitToMainMenu = false;
