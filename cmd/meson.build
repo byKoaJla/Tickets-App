@@ -1,19 +1,26 @@
 executable('tickets app', 
                 'main.cpp',
                 link_with: [
+                    about_lib,
+                    all_tickets_lib,
                     styles_lib,
-                    utils_lib,
                     database_lib,
                     ticket_lib,
                     reservedTicket_lib,
+                    utils_lib,
                     router_lib,
+                    routes_lib,
                 ],
                 include_directories: [
+                    about_includes,
+                    all_tickets_includes,
                     styles_includes,
-                    utils_includes,
                     database_includes,
                     ticket_includes,
                     reservedTicket_includes,
                     router_includes,
+                    utils_includes,
+                    routes_includes,
+                    appconf_includes,
                 ]
 )

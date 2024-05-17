@@ -8,16 +8,36 @@
 #include <ostream>
 #include <list>
 #include <iostream>
+#include <utility>
 #include <ostream>
 namespace Db {
 
     using namespace std;
 
     struct S_ticket {
-        string departureDay;
-        string departureTime;
-        string destination;
-        int freeSeats;
+        string _day;
+        string _time;
+        string _destination;
+        int _seats;
+
+        S_ticket(string  day, string  time, string  destination, const int seats)
+        : _day(std::move(day)), _time(std::move(time)), _destination(std::move(destination)), _seats(seats) {}
+        // Конструктор по умолчанию
+        S_ticket() : _seats(0) {}
+
+        // Геттеры и сеттеры
+
+        [[nodiscard]] const string& getDay() const { return _day; }
+        void setDay(const string& day) { _day = day; }
+
+        [[nodiscard]] const string& getTime() const { return _time; }
+        void setTime(const string& time) { _time = time; }
+
+        [[nodiscard]] const string& getDestination() const { return _destination; }
+        void setDestination(const string& destination) { _destination = destination; }
+
+        [[nodiscard]] int getSeats() const { return _seats; }
+        void setSeats(const int seats) { _seats = seats; }
     };
 
     class Atom {
@@ -59,17 +79,18 @@ namespace Db {
         string _path;
         list<St> _liqList;
     public:
-        explicit Store(const string& path): _path(std::move(_path)) {};
+        explicit Store(string path): _path(std::move(path)) {};
 
         void save(const St &item) {
             ifstream cFile(_path, ios::binary);
-            if (!cFile) cerr << "Error to open file: " << _path << endl;
-            St _item;
-            while (cFile >> _item) { if (item.getID() == _item.getID()) return; }
-            cFile.close();
+            if (cFile.good()) {
+                St _item;
+                while (cFile >> _item) { if (item.getID() == _item.getID()) return; }
+                cFile.close();
+            }
 
             ofstream wFile(_path, ios::binary | ios::app);
-            if (!wFile) cerr << "Error to open file: " << _path << endl;
+            if (!wFile) cerr << "Error to open file for to writing: " << _path << endl;
             wFile << item;
             wFile.close();
 
