@@ -62,7 +62,20 @@ namespace Reserved_Ticket {
         Db::Store<ReservedTicket> rStore(reserved_ticket_path);
         if (Ticket t = mDb.getItemByID(id); t.ticket.getSeats() > nSeats) {
             ReservedTicket rt(id, {t.ticket.getDay(), t.ticket.getTime(), t.ticket.getDestination(), nSeats}, phone);
-            rStore.save(rt);
+            REPEAT:
+            int confirm;
+            cout << "Зарерервировать?([0] Да | [1] Нет): ";
+            cin >> confirm;
+            if (cin.fail()) {
+                cout << "Нет такого варианта!" << endl;
+                cin.clear();
+                cin.ignore(10000, '\n');
+                goto REPEAT;
+            } else {
+                cout << "Места зарезервированы."<<endl;
+                rStore.save(rt);
+                _getch();
+            }
             t.ticket.setSeats(t.ticket.getSeats() - nSeats);
             auto updTicket = t;
             mDb.updateItemByID(id, updTicket);
