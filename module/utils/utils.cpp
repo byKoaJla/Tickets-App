@@ -1,5 +1,5 @@
-#include "utils.hpp"
 
+#include "utils.hpp"
 #include <codecvt>
 #include <ctime>
 #include <iomanip>
@@ -9,8 +9,8 @@
 #include <map>
 #include <sstream>
 
-using namespace std;
 namespace Utils {
+    using namespace std;
 
     string rusUp2Down(const std::string &str) {
         std::string result;
@@ -97,11 +97,13 @@ namespace Utils {
     }
     return size;
 }
-
+#include <Windows.h>
     std::wstring stringToWstring(const std::string& str) {
-    wstring_convert<codecvt_utf8<wchar_t>> converter;
-    return converter.from_bytes(str);
-}
+        int size_needed = MultiByteToWideChar(65001, 0, str.c_str(), -1, nullptr, 0);
+        std::wstring wstr(size_needed, 0);
+        MultiByteToWideChar(65001, 0, str.c_str(), -1, &wstr[0], size_needed);
+        return wstr;
+    }
 
     string getCurrentDate() {
     const std::time_t currentTime = std::time(nullptr);

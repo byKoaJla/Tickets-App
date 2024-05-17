@@ -32,7 +32,10 @@ public:
     ~ReservedTicket() override = default;
 
     void serialize(ostream &os) const override {
-        auto [dDay, dTime, dest, fSeats] = ticket;
+        string dDay = ticket.getDay();
+        string dTime = ticket.getTime();
+        string dest = ticket.getDestination();
+        int fSeats = ticket.getSeats();
         os  << _id << " "
             << dDay << " "
             << dTime << " "
@@ -42,8 +45,13 @@ public:
     };
 
     void deserialize(istream &is) override {
-        auto [dDay, dTime, dest, fSeats] = ticket;
+        std::string dDay, dTime, dest;
+        int fSeats;
         is >> _id >> dDay >> dTime >> dest >> fSeats >> _phone;
+        ticket.setDay(dDay);
+        ticket.setTime(dTime);
+        ticket.setDestination(dest);
+        ticket.setSeats(fSeats);
     };
 
     [[nodiscard]] string getID() const override {
@@ -76,7 +84,7 @@ public:
     static list<ReservedTicket> liquidItems(const std::list<ReservedTicket> &items) {
         std::list<ReservedTicket> result;
         for (const auto &t : items) {
-            auto dDay = t.ticket.departureDay;
+            auto dDay = t.ticket.getDay();
             const auto iDay = Utils::parseDate(dDay);
 
             if (auto [year, month, day] = Utils::parseDate(Utils::getCurrentDate()); iDay.year > year ||
@@ -92,8 +100,8 @@ public:
     bool eq(ReservedTicket &a, ReservedTicket &b, const int n) {
         switch (n) {
             case 0: {
-                auto [year1, month1, day1] = Utils::parseDate(a.ticket.departureDay);
-                auto [year2, month2, day2] = Utils::parseDate(b.ticket.departureDay);
+                auto [year1, month1, day1] = Utils::parseDate(a.ticket.getDay());
+                auto [year2, month2, day2] = Utils::parseDate(b.ticket.getDay());
                 if (year1 != year2) {
                     return year1 < year2;
                 } else if (month1 != month2) {
@@ -103,13 +111,13 @@ public:
                 }
             };
             case 1: {
-                return Utils::timeToSeconds(a.ticket.departureTime) < Utils::timeToSeconds(b.ticket.departureTime);
+                return Utils::timeToSeconds(a.ticket.getTime()) < Utils::timeToSeconds(b.ticket.getTime());
             };
             case 2: {
-                return a.ticket.destination.length() < b.ticket.destination.length();
+                return a.ticket.getDestination().length() < b.ticket.getDestination().length();
             };
             case 3: {
-                return a.ticket.freeSeats < b.ticket.freeSeats;
+                return a.ticket.getSeats() < b.ticket.getSeats();
             };
             default:
                 cerr << "No paraments get thin number: " << n << endl; break;

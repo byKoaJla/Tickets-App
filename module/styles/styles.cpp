@@ -27,9 +27,9 @@ namespace Styles {
 
     void ticket_header() {
         cout << left << setfill(' ') << setw(15) << "Номер"
-                  << setw(16) << "День"
-                  << setw(15) << "Время"
-                  << setw(30) << "Направление"
+                  << setw(17) << "День"
+                  << setw(14) << "Время"
+                  << setw(29) << "Направление"
                   << right << setw(20) << "Свободные места" << endl;
         cout << string(66, '-') << endl;
     }

@@ -1,2 +1,3 @@
 subdir('router')
-#subdir('screens')
+subdir('screens')
+subdir('routes')
