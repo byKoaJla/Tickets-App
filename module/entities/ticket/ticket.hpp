@@ -45,9 +45,9 @@ public:
         return _id;
     };
 
-    void setID(string &id) override {
+    void setID(const string &id) override {
         _id = id;
-    };
+    }
 
     static void bPrint(const Ticket &t) {
         std::wclog << std::left << std::setfill(L' ') << std::setw(11) << Utils::stringToWstring(t.getID())

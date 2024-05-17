@@ -69,8 +69,6 @@ namespace All_Tickets {
         int currentPosition = 0;
         int limit = show_limit;
         list<Ticket> lqTickets = Ticket::liquidItems(mockStore.loadAll());
-        auto l_lqT = lqTickets.begin();
-        advance(l_lqT, 1);
         cout << std::endl;
         if (lqTickets.size() < limit) { limit = static_cast<int>(lqTickets.size()); }
         displayList(lqTickets, limit, currentPosition);

@@ -5,7 +5,7 @@ using namespace std;
 namespace Utils {
     string rusUp2Down(const std::string &str);
 
-    string getDayOfWeek(const std::string& day);
+    std::string getDayOfWeek(const std::string &day);
 
     int timeToSeconds(const std::string &timeStr);
 
@@ -20,4 +20,5 @@ namespace Utils {
     std::wstring stringToWstring(const std::string& str);
 
     string getCurrentDate();
+
 }

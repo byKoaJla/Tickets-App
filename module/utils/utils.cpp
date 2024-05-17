@@ -40,30 +40,31 @@ namespace Utils {
     return result;
 }
 
-    string getDayOfWeek(const std::string& day) {
-    std::map<std::string, int> weekdays = {
-        {"пн", 1}, {"вт", 2}, {"ср", 3}, {"чт", 4}, {"пт", 5}, {"сб", 6}, {"вс", 0}
-    };
 
-    const time_t currentTime = time(nullptr);
-    tm* localTime = localtime(&currentTime);
+    std::string getDayOfWeek(const std::string &day) {
+        std::map<std::string, int> weekdays = {
+            {"пн", 1}, {"вт", 2}, {"ср", 3}, {"чт", 4}, {"пт", 5}, {"сб", 6}, {"вс", 0}
+        };
 
-    const int dayOfWeek = localTime->tm_wday;
-    int daysToTarget = weekdays[day] - dayOfWeek;
-    if (daysToTarget < 0) {
-        daysToTarget += 7;
+        const time_t currentTime = time(nullptr);
+        tm* localTime = localtime(&currentTime);
+
+        const int dayOfWeek = localTime->tm_wday;
+        int daysToTarget = weekdays[day] - dayOfWeek;
+        if (daysToTarget < 0) {
+            daysToTarget += 7;
+        }
+
+        localTime->tm_mday += daysToTarget;
+        mktime(localTime);
+
+        std::stringstream ss;
+        ss << std::setw(4) << std::setfill('0') << localTime->tm_year + 1900
+           << "-" << std::setw(2) << std::setfill('0') << localTime->tm_mon + 1
+           << "-" << std::setw(2) << std::setfill('0') << localTime->tm_mday;
+
+        return ss.str();
     }
-
-    localTime->tm_mday += daysToTarget;
-    mktime(localTime);
-
-    std::stringstream ss;
-    ss << std::setw(4) << std::setfill('0') << localTime->tm_year + 1900
-       << "-" << std::setw(2) << std::setfill('0') << localTime->tm_mon + 1
-       << "-" << std::setw(2) << std::setfill('0') << localTime->tm_mday;
-
-    return ss.str();
-}
 
     int timeToSeconds(const std::string &timeStr) {
     int hours, minutes;

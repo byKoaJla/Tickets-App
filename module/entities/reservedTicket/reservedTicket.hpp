@@ -8,7 +8,6 @@
 #include "database.hpp"
 #include "utils.hpp"
 #include <string>
-#include <utility>
 
 using namespace std;
 class ReservedTicket final : public Db::Atom {
@@ -18,12 +17,13 @@ private:
 public:
     Db::S_ticket ticket;
 
-    ReservedTicket(
+    ReservedTicket() = default;
+    explicit ReservedTicket(
         Db::S_ticket ticket,
         string phone
     ) : _phone(std::move(phone)), ticket(std::move(ticket)) {}
 
-    ReservedTicket(
+    explicit ReservedTicket(
         string id,
         Db::S_ticket ticket,
         string phone
@@ -36,6 +36,7 @@ public:
         string dTime = ticket.getTime();
         string dest = ticket.getDestination();
         int fSeats = ticket.getSeats();
+
         os  << _id << " "
             << dDay << " "
             << dTime << " "
@@ -58,7 +59,7 @@ public:
         return _id;
     };
 
-    void setID(string &id) override {
+    void setID(const string &id) override {
         _id = id;
     };
 
@@ -71,14 +72,14 @@ public:
         const std::wstring wDest = Utils::stringToWstring(dest);
         const std::wstring wPhone = Utils::stringToWstring(t._phone);
 
-        std::wcout << std::left << std::setfill(L' ') << std::setw(10) << wId
-                  << std::setw(12) << wDepD
-                  << std::setw(10) << wDepT
-                  << std::setw(19) << wDest
-                  << std::left << std::setw(10)
-                  << std::setw(18) << fSeats
-                  << std::setw(30) << wPhone
-                  << std::endl;
+        std::wclog << std::left << std::setfill(L' ') << std::setw(10) << Utils::stringToWstring(t.getID())
+            << std::setw(12) << Utils::stringToWstring(t.ticket.getDay())
+            << std::setw(10) << Utils::stringToWstring(t.ticket.getTime())
+            << std::setw(19) << Utils::stringToWstring(t.ticket.getDestination())
+            << std::left << std::setw(10)
+            << std::setw(18) << t.ticket.getSeats()
+            << std::setw(30) << Utils::stringToWstring(t._phone)
+            << endl;
     };
 
     static list<ReservedTicket> liquidItems(const std::list<ReservedTicket> &items) {
@@ -97,7 +98,7 @@ public:
         return result;
     }
 
-    bool eq(ReservedTicket &a, ReservedTicket &b, const int n) {
+    static bool eq(const ReservedTicket &a, const ReservedTicket &b, const int n) {
         switch (n) {
             case 0: {
                 auto [year1, month1, day1] = Utils::parseDate(a.ticket.getDay());

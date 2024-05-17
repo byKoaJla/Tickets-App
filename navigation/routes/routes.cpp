@@ -7,6 +7,7 @@
 #include <vector>
 #include <about.hpp>
 #include <all_tickets.hpp>
+#include <reserved_ticket.hpp>
 
 namespace Routes {
     using namespace std;
@@ -18,11 +19,12 @@ namespace Routes {
     vector<Navigation::NavPoint> screens_graph() {
         vector<Navigation::NavPoint> _graph;
 
-
+        constexpr auto reserved_tickets = Navigation::NavPoint(2, Reserved_Ticket::reserved_ticket_screen);
         constexpr auto all_tickets = Navigation::NavPoint(3, All_Tickets::all_tickets_screen);
         constexpr auto about = Navigation::NavPoint(4, About::about_screen);
         constexpr auto quit = Navigation::NavPoint(5, quit_app);
 
+        _graph.push_back(reserved_tickets);
         _graph.push_back(all_tickets);
         _graph.push_back(about);
         _graph.push_back(quit);

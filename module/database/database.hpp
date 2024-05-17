@@ -46,7 +46,7 @@ namespace Db {
         virtual void serialize(ostream &os) const = 0;
         virtual void deserialize(istream &is) = 0;
         [[nodiscard]] virtual string getID() const = 0;
-        virtual void setID(string &id) = 0;
+        virtual void setID(const string &id) = 0;
 
         friend auto operator<<(ostream &os, const Atom &a) -> ostream& {
             a.serialize(os);
@@ -110,19 +110,18 @@ namespace Db {
 
         St getItemByID(const string &id) {
             auto list = loadAll();
-            auto it = find(list.begin(), list.end(), [&](const St &item) {
+            auto it = find_if(list.begin(), list.end(), [&](const St &item) {
                 return item.getID() == id;
             });
 
             if (it != list.end()) {
                 return *it;
+            } else {
+                throw runtime_error("Item not found by this id: " + id);
             }
-            else {
-                cerr << "No find item by this id: " << id << endl;
-            }
-
-            return nullptr;
         }
+
+
 
         void clearAll() const {
             ofstream clFile(_path, ios::out ,ios::trunc);
@@ -131,27 +130,40 @@ namespace Db {
         }
 
         void updateItemByID(const string &id, St &newItem) {
-            list<St> list = loadAll();
-            auto it = find(list.begin(), list.end(), [&](const St item) {
-                return item.getID() == id;
-            });
+            list<St> updatedList;
+            list<St> oldList = loadAll();
 
-            if (it != list.end()) {
-                newItem.setID(id);
-                *it = newItem;
-            } else {
-                cerr << "Element with ID " << id << " not found" << endl;
+            bool found = false;
+
+            if (!oldList.empty()) {
+                for (const St &o : oldList) {
+                    if (o.getID() == id) {
+                        St updatedItem = newItem;
+                        updatedItem.setID(id);
+                        updatedList.push_back(updatedItem);
+                        found = true;
+                    } else {
+                        updatedList.push_back(o);
+                    }
+
+                }
+                if (!found) {
+                    std::cerr << "Element with ID " << id << " not found" << std::endl;
+                    updatedList.push_back(newItem);
+                }
+                oldList = updatedList;
             }
 
             clearAll();
-
-            ifstream wFile(_path, ios::binary | ios::app);
-            if (!wFile) cerr << "Error to open: " << _path << endl;
-            for (const auto &item : list) {
-                wFile << item;
+            ofstream wfile(_path, ios::binary | ios::app);
+            if(!wfile) cerr << "Error to write file" << endl;
+            for(const auto &o : oldList) {
+                wfile << o;
             }
-            wFile.close();
+            wfile.close();
+
         }
+
 
         void removeItemByID(const string &id) {
             list<St> list = loadAll();
