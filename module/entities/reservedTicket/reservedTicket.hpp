@@ -63,6 +63,13 @@ public:
         _id = id;
     };
 
+    [[nodiscard]] string getPhone() const {
+        return _phone;
+    }
+    void setPhone(const string &phone) {
+        _phone = phone;
+    }
+
     static void bPrint(const ReservedTicket &t) {
         auto [dDay, dTime, dest, fSeats] = t.ticket;
 
@@ -72,14 +79,24 @@ public:
         const std::wstring wDest = Utils::stringToWstring(dest);
         const std::wstring wPhone = Utils::stringToWstring(t._phone);
 
-        std::wclog << std::left << std::setfill(L' ') << std::setw(10) << Utils::stringToWstring(t.getID())
-            << std::setw(12) << Utils::stringToWstring(t.ticket.getDay())
-            << std::setw(10) << Utils::stringToWstring(t.ticket.getTime())
-            << std::setw(19) << Utils::stringToWstring(t.ticket.getDestination())
+        std::wclog << std::left << std::setfill(L' ') << std::setw(11) << Utils::stringToWstring(t.getID())
+            << std::setw(13) << Utils::stringToWstring(t.ticket.getDay())
+            << std::setw(11) << Utils::stringToWstring(t.ticket.getTime())
+            << std::setw(20) << Utils::stringToWstring(t.ticket.getDestination())
             << std::left << std::setw(10)
             << std::setw(18) << t.ticket.getSeats()
             << std::setw(30) << Utils::stringToWstring(t._phone)
             << endl;
+
+        /*
+        * std::wcout << std::left << std::setfill(L' ') << std::setw(10) << wId
+                  << std::setw(12) << wDepD
+                  << std::setw(10) << wDepT
+                  << std::setw(19) << wDest
+                  << std::setw(18) << t.freeSeats
+                  << std::setw(30) << wPhone
+                  << std::endl;
+         */
     };
 
     static list<ReservedTicket> liquidItems(const std::list<ReservedTicket> &items) {

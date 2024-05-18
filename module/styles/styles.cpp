@@ -33,14 +33,14 @@ namespace Styles {
                   << right << setw(20) << "Свободные места" << endl;
         cout << string(66, '-') << endl;
     }
-    void resoved_header() {
+    void reseved_header() {
         cout << left << setfill(' ') << setw(15) << "Номер"
                   << setw(16) << "День"
                   << setw(15) << "Время"
                   << setw(30) << "Направление"
                   << setw(20) << "Зарезерв. места"
                   << right << setw(30) << "Номер телефона"<< endl;
-        cout << string(83, '-') << endl;
+        cout << string(85, '-') << endl;
     }
 
     string pLogo() {
