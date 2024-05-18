@@ -71,6 +71,8 @@ namespace Reserved_Ticket {
                 cin.clear();
                 cin.ignore(10000, '\n');
                 goto REPEAT;
+            } else if(confirm == 1) {
+                return;
             } else {
                 cout << "Места зарезервированы."<<endl;
                 rStore.save(rt);

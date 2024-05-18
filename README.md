@@ -51,3 +51,21 @@
 ![reserv_view_1](for_git/reserved_view.png)
 ![reserv_view_2](for_git/reserved_view_1.png)
 ![reserv_view_3](for_git/reserved_view_2.png)
+
+**Просмотр зарезервированных билетов**
+
+Здесь вы можете удобно просматривать все зарезервированные билеты, осуществлять поиск по номеру телефона и удалять ненужные записи.
+
+Возможности:
+1. Просмотр всех зарезервированных билетов: Получите полный список всех билетов, которые были зарезервированы.
+   ![view_all_reserved](for_git/view_all_reserved.png)
+2. Поиск по номеру телефона: Легко найдите нужный билет, введя номер телефона, связанный с бронированием.
+   ![find_by_phone](for_git/find_by_phone.png)
+   ![find_by_phone_0](for_git/find_by_phone_0.png)
+   ![find_by_phone_1](for_git/find_by_phone_1.png)
+3. Удаление билетов: Удалите ненужные записи из списка зарезервированных билетов.
+   ![remove_reserv](for_git/remove_reserv.png)
+   ![remove_reserv1](for_git/remove_reserv1.png)
+   ![remove_reserv2](for_git/remove_reserv2.png)
+
+

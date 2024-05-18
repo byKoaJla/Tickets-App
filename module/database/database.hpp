@@ -167,11 +167,10 @@ namespace Db {
 
         void removeItemByID(const string &id) {
             list<St> list = loadAll();
-            find(list.begin(), list.end(), [&](St &it) {
-                if (it.getID() == id) {
-                    list.erase(it);
-                }
+            list.remove_if([&](const St& item) {
+                return item.getID() == id;
             });
+
             clearAll();
             ofstream wFile(_path, ios::binary | ios::app);
             if (!wFile) cerr << "Error to read file: " << _path << endl;
