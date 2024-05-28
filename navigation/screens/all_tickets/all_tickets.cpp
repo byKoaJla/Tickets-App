@@ -25,31 +25,36 @@ namespace All_Tickets {
         Styles::user_interface("(4) [перейти назад] (6) [перейти вперед] (s) [Сортировать по..] (f) [Фильтровать] (q) [Выход]:\t");
     }
 
-    void sortTickets(std::list<Ticket>& tickets, const int choice) {
+    void sortTickets(std::list<Ticket>& tickets, const int choice, bool ascending = true) {
+        static bool lastSortAscending = true;
+        if (choice != -1) {
+            ascending = lastSortAscending = !lastSortAscending;
+        }
+
         switch (choice) {
             case 0: // По дате
-                tickets.sort([](Ticket& a, Ticket& b) {
-                  return Ticket::eq(a, b, 0);
-              });
-                break;
-            case 1: // По времени
-                tickets.sort([](Ticket& a, Ticket& b) {
-                    return Ticket::eq(a, b, 1);
+                tickets.sort([ascending](Ticket& a, Ticket& b) {
+                    return ascending ? Ticket::eq(a, b, 0) : !Ticket::eq(a, b, 0);
                 });
-                break;
+            break;
+            case 1: // По времени
+                tickets.sort([ascending](Ticket& a, Ticket& b) {
+                    return ascending ? Ticket::eq(a, b, 1) : !Ticket::eq(a, b, 1);
+                });
+            break;
             case 2: // По направлению
-                tickets.sort([](Ticket& a, Ticket& b) {
-                   return Ticket::eq(a, b, 2);
-               });
-                break;
+                tickets.sort([ascending](Ticket& a, Ticket& b) {
+                    return ascending ? Ticket::eq(a, b, 2) : !Ticket::eq(a, b, 2);
+                });
+            break;
             case 3: // По свободным местам
-                tickets.sort([](Ticket& a, Ticket& b) {
-                   return Ticket::eq(a, b, 3);
-               });
-                break;
+                tickets.sort([ascending](Ticket& a, Ticket& b) {
+                    return ascending ? Ticket::eq(a, b, 3) : !Ticket::eq(a, b, 3);
+                });
+            break;
             default:
                 std::cout << "Некорректный выбор сортировки." << std::endl;
-                break;
+            break;
         }
     }
 

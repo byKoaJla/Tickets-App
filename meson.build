@@ -26,7 +26,7 @@ add_project_arguments(build_options, language : 'cpp')
 
 cdata = configuration_data()
 cdata.set('MOCK_TICKET_PATH', '"mock_tickets.bin"')
-cdata.set('SHOW_LIMIT', 5)
+cdata.set('SHOW_LIMIT', 10)
 cdata.set('RESERVED_TICKET_PATH', '"reserved_tickets.bin"')
 
 
@@ -39,5 +39,13 @@ config_h = configure_file(
 appconf_includes = include_directories('.')
 
 subdir('module')
+
 subdir('navigation')
+subdir('tests')
 subdir('cmd')
+
+test('unit_tests', executable('unit_db_tests', 'tests/db_test.cpp', include_directories:[
+                                    ticket_includes,
+                                    database_includes,
+                                    utils_includes
+                              ]))

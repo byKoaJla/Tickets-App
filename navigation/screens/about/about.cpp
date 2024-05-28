@@ -7,6 +7,8 @@
 #include <string>
 #include <iostream>
 #include <conio.h>
+#include "fcntl.h"
+#include "io.h"
 
 namespace About {
     using namespace std;
@@ -17,12 +19,14 @@ namespace About {
                        "бронирующее билеты на определенное "
                        "число людей на конкретную дату. Для "
                        "подробностей обращайтесь на "
-                       "GitHub: https://github.com/byKoT3uJla/Tickets-App/";
+                       "GitHub: https://github.com/byKoaJla/Tickets-App";
 
 
         Styles::bPrintH(title);
+        //cout << Styles::auth_logo();
         cout << endl;
         cout << content << endl;
+
     };
     bool about_screen() {
         about_view();

@@ -88,15 +88,6 @@ public:
             << std::setw(30) << Utils::stringToWstring(t._phone)
             << endl;
 
-        /*
-        * std::wcout << std::left << std::setfill(L' ') << std::setw(10) << wId
-                  << std::setw(12) << wDepD
-                  << std::setw(10) << wDepT
-                  << std::setw(19) << wDest
-                  << std::setw(18) << t.freeSeats
-                  << std::setw(30) << wPhone
-                  << std::endl;
-         */
     };
 
     static list<ReservedTicket> liquidItems(const std::list<ReservedTicket> &items) {

@@ -12,4 +12,5 @@ namespace Styles {
     void reseved_header();
     void user_interface(const string &n_line);
     string pLogo();
+    string auth_logo();
 }

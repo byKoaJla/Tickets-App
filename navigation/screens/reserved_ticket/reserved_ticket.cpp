@@ -50,7 +50,7 @@ namespace Reserved_Ticket {
         }
         std::cout << std::endl;
         std::cout << datalist.size() << " (записей) / " << (currentPosition + limit) << " (открыто)" << std::endl;
-        Styles::user_interface("(4) [перейти назад] (6) [перейти вперед] (s) [Сортировать по..] (r) [Зарерервировать] (q) [Выход]:\t");
+        Styles::user_interface("(r) [Зарерервировать] (q) [Выход]:\t");
     }
 
     void reserveTicket(Db::Store<Ticket>& mDb) {
@@ -116,13 +116,11 @@ namespace Reserved_Ticket {
             } else {
                 char uInput;
                 int currentPossition = 0;
-                displayList(foundTickets, limit_path, currentPossition);
+                displayList(foundTickets, foundTickets.size(), currentPossition);
 
                 cin >> uInput;
                 if (uInput == 'r') {
                     reserveTicket(fullTickets);
-                } else if (uInput == 's') {
-                    continue;
                 } else if (uInput == 'q') {
                    returnToMenu = true;
                 }
